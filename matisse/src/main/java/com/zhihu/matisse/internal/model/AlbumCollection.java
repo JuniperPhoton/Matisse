@@ -75,6 +75,10 @@ public class AlbumCollection implements LoaderManager.LoaderCallbacks<Cursor> {
         mCallbacks = callbacks;
     }
 
+    public void onPause() {
+        mLoadFinished = false;
+    }
+
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             return;

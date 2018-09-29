@@ -164,7 +164,7 @@ public class MatisseActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         mAlbumCollection.onDestroy();
-        mSpec.onCheckedListener = null;
+        mSpec.onOriginalCheckedListener = null;
         mSpec.onSelectedListener = null;
     }
 
@@ -329,8 +329,8 @@ public class MatisseActivity extends AppCompatActivity implements
             mOriginalEnable = !mOriginalEnable;
             mOriginal.setChecked(mOriginalEnable);
 
-            if (mSpec.onCheckedListener != null) {
-                mSpec.onCheckedListener.onCheck(mOriginalEnable);
+            if (mSpec.onOriginalCheckedListener != null) {
+                mSpec.onOriginalCheckedListener.onCheck(mOriginalEnable);
             }
         }
     }

@@ -167,8 +167,8 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
                 }
 
 
-                if (mSpec.onCheckedListener != null) {
-                    mSpec.onCheckedListener.onCheck(mOriginalEnable);
+                if (mSpec.onOriginalCheckedListener != null) {
+                    mSpec.onOriginalCheckedListener.onCheck(mOriginalEnable);
                 }
             }
         });

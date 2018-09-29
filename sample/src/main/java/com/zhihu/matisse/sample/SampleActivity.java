@@ -37,7 +37,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-import com.zhihu.matisse.listener.OnCheckedListener;
+import com.zhihu.matisse.listener.OnOriginalCheckedListener;
 import com.zhihu.matisse.listener.OnSelectedListener;
 
 import java.util.List;
@@ -104,7 +104,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                                             .originalEnable(true)
                                             .maxOriginalSize(10)
                                             .autoHideToolbarOnSingleTap(true)
-                                            .setOnCheckedListener(new OnCheckedListener() {
+                                            .setOnOriginalCheckedListener(new OnOriginalCheckedListener() {
                                                 @Override
                                                 public void onCheck(boolean isChecked) {
                                                     // DO SOMETHING IMMEDIATELY HERE
