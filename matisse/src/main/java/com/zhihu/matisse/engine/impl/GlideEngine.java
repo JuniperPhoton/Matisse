@@ -23,12 +23,17 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.zhihu.matisse.engine.ImageEngine;
+import com.zhihu.matisse.engine.ImageViewFactory;
 
 /**
  * {@link ImageEngine} implementation using Glide.
  */
+public class GlideEngine implements ImageEngine<ImageView> {
 
-public class GlideEngine implements ImageEngine {
+    @Override
+    public ImageViewFactory<ImageView> provideImageViewFactory(Context context) {
+        return new DefaultImageViewFactory();
+    }
 
     @Override
     public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {

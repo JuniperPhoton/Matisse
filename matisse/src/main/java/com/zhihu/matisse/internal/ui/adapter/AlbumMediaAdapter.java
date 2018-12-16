@@ -25,14 +25,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.Album;
+import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
-import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.model.SelectedItemCollection;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
 import com.zhihu.matisse.internal.ui.widget.MediaGrid;
@@ -78,7 +77,10 @@ public class AlbumMediaAdapter extends
             });
             return holder;
         } else if (viewType == VIEW_TYPE_MEDIA) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.media_grid_item, parent, false);
+            Context context = parent.getContext();
+            View thumbnailView = mSelectionSpec.getImageViewFactory(context).provideImageView(context, parent);
+            MediaGrid v = (MediaGrid) LayoutInflater.from(parent.getContext()).inflate(R.layout.media_grid_item, parent, false);
+            v.setThumbnailImageView(thumbnailView);
             return new MediaViewHolder(v);
         }
         return null;
@@ -158,7 +160,7 @@ public class AlbumMediaAdapter extends
     }
 
     @Override
-    public void onThumbnailClicked(ImageView thumbnail, Item item, RecyclerView.ViewHolder holder) {
+    public void onThumbnailClicked(View thumbnail, Item item, RecyclerView.ViewHolder holder) {
         if (mOnMediaClickListener != null) {
             mOnMediaClickListener.onMediaClick(null, item, holder.getAdapterPosition());
         }

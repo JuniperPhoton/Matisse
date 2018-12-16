@@ -20,11 +20,12 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhihu.matisse.R;
@@ -57,7 +58,22 @@ public class AlbumsAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.album_list_item, parent, false);
+        View thumbnailView = SelectionSpec.getInstance().getImageViewFactory(context)
+                .provideImageView(context, parent);
+        thumbnailView.setId(R.id.album_cover);
+
+        ViewGroup view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.album_list_item, parent, false);
+
+        int size = context.getResources().getDimensionPixelSize(R.dimen.album_cover_size);
+        int margin = context.getResources().getDimensionPixelSize(R.dimen.album_cover_margin_start);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(size, size);
+        lp.leftMargin = margin;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            lp.setMarginStart(margin);
+        }
+        lp.addRule(RelativeLayout.CENTER_VERTICAL);
+        view.addView(thumbnailView, 1, lp);
+        return view;
     }
 
     @Override
@@ -69,6 +85,6 @@ public class AlbumsAdapter extends CursorAdapter {
         // do not need to load animated Gif
         SelectionSpec.getInstance().imageEngine.loadThumbnail(context, context.getResources().getDimensionPixelSize(R
                         .dimen.media_grid_size), mPlaceholder,
-                (ImageView) view.findViewById(R.id.album_cover), Uri.fromFile(new File(album.getCoverPath())));
+                view.findViewById(R.id.album_cover), Uri.fromFile(new File(album.getCoverPath())));
     }
 }

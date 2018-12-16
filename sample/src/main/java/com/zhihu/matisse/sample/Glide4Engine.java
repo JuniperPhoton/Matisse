@@ -24,12 +24,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.zhihu.matisse.engine.ImageEngine;
+import com.zhihu.matisse.engine.ImageViewFactory;
+import com.zhihu.matisse.engine.impl.DefaultImageViewFactory;
 
 /**
  * {@link ImageEngine} implementation using Glide.
  */
 
-public class Glide4Engine implements ImageEngine {
+public class Glide4Engine implements ImageEngine<ImageView> {
+    @Override
+    public ImageViewFactory<ImageView> provideImageViewFactory(Context context) {
+        return new DefaultImageViewFactory();
+    }
 
     @Override
     public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {

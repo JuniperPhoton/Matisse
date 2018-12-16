@@ -30,8 +30,7 @@ import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
 
 public class MediaGrid extends SquareFrameLayout implements View.OnClickListener {
-
-    private ImageView mThumbnail;
+    private View mThumbnail;
     private CheckView mCheckView;
     private ImageView mGifTag;
     private TextView mVideoDuration;
@@ -53,13 +52,17 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.media_grid_content, this, true);
 
-        mThumbnail = (ImageView) findViewById(R.id.media_thumbnail);
-        mCheckView = (CheckView) findViewById(R.id.check_view);
-        mGifTag = (ImageView) findViewById(R.id.gif);
-        mVideoDuration = (TextView) findViewById(R.id.video_duration);
+        mCheckView = findViewById(R.id.check_view);
+        mGifTag = findViewById(R.id.gif);
+        mVideoDuration = findViewById(R.id.video_duration);
 
-        mThumbnail.setOnClickListener(this);
         mCheckView.setOnClickListener(this);
+    }
+
+    public void setThumbnailImageView(View view) {
+        mThumbnail = view;
+        mThumbnail.setOnClickListener(this);
+        addView(mThumbnail);
     }
 
     @Override
@@ -137,8 +140,7 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
     }
 
     public interface OnMediaGridClickListener {
-
-        void onThumbnailClicked(ImageView thumbnail, Item item, RecyclerView.ViewHolder holder);
+        void onThumbnailClicked(View thumbnail, Item item, RecyclerView.ViewHolder holder);
 
         void onCheckViewClicked(CheckView checkView, Item item, RecyclerView.ViewHolder holder);
     }

@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.FrescoEngine;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -58,7 +59,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.zhihu).setOnClickListener(this);
         findViewById(R.id.dracula).setOnClickListener(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new UriAdapter());
     }
@@ -83,15 +84,14 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                                             .countable(true)
                                             .capture(true)
                                             .captureStrategy(
-                                                    new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider","test"))
+                                                    new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider", "test"))
                                             .maxSelectable(9)
                                             .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                                             .gridExpectedSize(
                                                     getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
                                             .thumbnailScale(0.85f)
-//                                            .imageEngine(new GlideEngine())  // for glide-V3
-                                            .imageEngine(new Glide4Engine())    // for glide-V4
+                                            .imageEngine(new FrescoEngine())  // for glide-V4
                                             .setOnSelectedListener(new OnSelectedListener() {
                                                 @Override
                                                 public void onSelected(

@@ -22,12 +22,18 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.zhihu.matisse.engine.ImageEngine;
+import com.zhihu.matisse.engine.ImageViewFactory;
 
 /**
  * {@link ImageEngine} implementation using Picasso.
  */
 
-public class PicassoEngine implements ImageEngine {
+public class PicassoEngine implements ImageEngine<ImageView> {
+
+    @Override
+    public ImageViewFactory<ImageView> provideImageViewFactory(Context context) {
+        return new DefaultImageViewFactory();
+    }
 
     @Override
     public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {

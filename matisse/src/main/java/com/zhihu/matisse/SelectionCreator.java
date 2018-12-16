@@ -363,5 +363,4 @@ public final class SelectionCreator {
             activity.startActivityForResult(intent, requestCode);
         }
     }
-
 }

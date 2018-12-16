@@ -18,14 +18,22 @@ package com.zhihu.matisse.engine;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.widget.ImageView;
+import android.view.View;
 
 /**
- * Image loader interface. There are predefined {@link com.zhihu.matisse.engine.impl.GlideEngine}
- * and {@link com.zhihu.matisse.engine.impl.PicassoEngine}.
+ * Image loader interface. There are predefined {@link com.zhihu.matisse.engine.impl.GlideEngine},
+ * {@link com.zhihu.matisse.engine.impl.PicassoEngine}
+ * and {@link com.zhihu.matisse.engine.impl.FrescoEngine}.
  */
 @SuppressWarnings("unused")
-public interface ImageEngine {
+public interface ImageEngine<T extends View> {
+    /**
+     * Provide an {@link ImageViewFactory} instance that used to create a {@link View}
+     * to display image.
+     *
+     * @param context Context
+     */
+    ImageViewFactory<T> provideImageViewFactory(Context context);
 
     /**
      * Load thumbnail of a static image resource.
@@ -36,7 +44,7 @@ public interface ImageEngine {
      * @param imageView   ImageView widget
      * @param uri         Uri of the loaded image
      */
-    void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri);
+    void loadThumbnail(Context context, int resize, Drawable placeholder, T imageView, Uri uri);
 
     /**
      * Load thumbnail of a gif image resource. You don't have to load an animated gif when it's only
@@ -48,7 +56,7 @@ public interface ImageEngine {
      * @param imageView   ImageView widget
      * @param uri         Uri of the loaded image
      */
-    void loadGifThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri);
+    void loadGifThumbnail(Context context, int resize, Drawable placeholder, T imageView, Uri uri);
 
     /**
      * Load a static image resource.
@@ -59,7 +67,7 @@ public interface ImageEngine {
      * @param imageView ImageView widget
      * @param uri       Uri of the loaded image
      */
-    void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri);
+    void loadImage(Context context, int resizeX, int resizeY, T imageView, Uri uri);
 
     /**
      * Load a gif image resource.
@@ -70,7 +78,7 @@ public interface ImageEngine {
      * @param imageView ImageView widget
      * @param uri       Uri of the loaded image
      */
-    void loadGifImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri);
+    void loadGifImage(Context context, int resizeX, int resizeY, T imageView, Uri uri);
 
     /**
      * Whether this implementation supports animated gif.

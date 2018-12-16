@@ -16,12 +16,15 @@
  */
 package com.zhihu.matisse.internal.entity;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.engine.ImageEngine;
+import com.zhihu.matisse.engine.ImageViewFactory;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.listener.OnCheckedListener;
@@ -31,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 public final class SelectionSpec {
+    private ImageViewFactory imageViewFactory;
 
     public Set<MimeType> mimeTypeSet;
     public boolean mediaTypeExclusive;
@@ -106,6 +110,18 @@ public final class SelectionSpec {
 
     public boolean onlyShowVideos() {
         return showSingleMediaType && MimeType.ofVideo().containsAll(mimeTypeSet);
+    }
+
+    @NonNull
+    public ImageViewFactory getImageViewFactory(@NonNull Context context) {
+        if (imageViewFactory == null) {
+            imageViewFactory = imageEngine.provideImageViewFactory(context);
+        }
+
+        if (imageViewFactory == null) {
+            throw new IllegalArgumentException("Please provide an ImageViewFactory in ImageEngine");
+        }
+        return imageViewFactory;
     }
 
     private static final class InstanceHolder {

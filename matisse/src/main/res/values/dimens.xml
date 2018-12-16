@@ -19,4 +19,6 @@
     <dimen name="media_grid_spacing">4dp</dimen>
 
     <dimen name="album_item_height">72dp</dimen>
+    <dimen name="album_cover_size">40dp</dimen>
+    <dimen name="album_cover_margin_start">16dp</dimen>
 </resources>
